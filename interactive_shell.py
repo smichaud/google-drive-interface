@@ -37,6 +37,15 @@ def main(argv):
             dir_name = command.replace('mkdir ', '', 1)
             drive.create_dir(dir_name, current_dir_id)
 
+        elif command.startswith('mkform '):
+            filename = command.replace('mkform ', '', 1)
+            drive.create_form(filename, current_dir_id)
+
+        elif command.startswith('details '):
+            filename = command.replace('details ', '', 1)
+            file_id = drive.get_file_by_name(filename, dir_id=current_dir_id)
+            drive.print_file_details(file_id)
+
         elif command.startswith('push '):
             filename = command.replace('push ', '', 1)
             drive.upload_file(filename)

@@ -47,6 +47,17 @@ class DriveInterface():
         return new_dir['id']
 
 
+    def create_form(self, filename, parent_id='root'):
+        new_form = self._drive.CreateFile({
+            'title': filename,
+            'parents':  [{"id": parent_id}],
+            'mimeType': "application/vnd.google-apps.form"
+        })
+        new_form.Upload()
+
+        return new_form['id']
+
+
     def recursive_dir_copy(self, src_id, dst_id):
         files = self.get_files_list(src_id)
         for f in files:
@@ -63,6 +74,15 @@ class DriveInterface():
             current_file = self.get_file_by_id(current_file['parents'][0]['id'])
 
         return "/" + path
+
+
+    def print_file_details(self, file_id):
+        f = self.get_file_by_id(file_id)
+        print("title: ", f['title'])
+        print("mimeType: ", f['mimeType'])
+        print("id: ", f['id'])
+        print("selfLink: ", f['selfLink'])
+        print("ownerNames: ", f['ownerNames'])
 
 
     def download_file(self, drive_file):
